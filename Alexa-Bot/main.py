@@ -2,6 +2,7 @@ import speech_recognition as sr
 import pyttsx3
 import pywhatkit as pwk
 import datetime
+import wikipedia
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()
@@ -53,8 +54,17 @@ def runAlexa():
         pwk.playonyt(song)
     elif 'tell' in command and 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
-        talk(time)
+        talk('Current time is ' + time)
+    elif 'search' in command:
+        person = command.replace('search', '')
+        pwk.search(person)
+    elif 'info about'in command:
+        person = command.replace('info about', '')
+        info = wikipedia.summary(person, sentences=2)
+        talk(info)
+    elif 'exit' in command:
+        exit()
         
-
 # runners
-runAlexa()
+while 1:
+    runAlexa()
